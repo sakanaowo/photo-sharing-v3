@@ -2,7 +2,7 @@ const express = require("express");
 const User = require("../db/userModel");
 const router = express.Router();
 // import { getUsers, getUserById } from "../controllers/user.controller";
-const { getUsers, getUserById } = require("../controllers/User.controller");
+const { getUsers, getUserById } = require("../controllers/user.controller");
 
 // router.post("/", async (request, response) => {
 

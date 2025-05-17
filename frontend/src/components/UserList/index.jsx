@@ -17,7 +17,7 @@ function UserList() {
 
   useEffect(() => {
     fetchModel("http://localhost:8081/api/user/list")
-      .then((response) => response.json())
+      // .then((response) => response.json())
       .then((data) => {
         setUsers(data);
       })
