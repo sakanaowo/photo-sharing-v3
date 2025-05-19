@@ -9,8 +9,7 @@ export const getUsers = async (req, res) => {
         console.error("Error fetching users:", error);
         res.status(500).json({ message: error.message });
     }
-
-}
+};
 export const getUserById = async (req, res) => {
     const userId = req.params.id;
     if (!mongoose.Types.ObjectId.isValid(userId)) {
@@ -18,7 +17,8 @@ export const getUserById = async (req, res) => {
     }
 
     try {
-        const user = await User.findById(userId,
+        const user = await User.findById(
+            userId,
             "_id first_name last_name location description occupation"
         );
         if (!user) {
@@ -29,4 +29,22 @@ export const getUserById = async (req, res) => {
         console.error("Error fetching user:", error);
         return res.status(500).json({ message: error.message });
     }
-}
+};
+
+export const addUser = async (req, res) => {
+    const { first_name, last_name, location, description, occupation } = req.body;
+    try {
+        const newUser = new User({
+            first_name,
+            last_name,
+            location,
+            description,
+            occupation,
+        });
+        await newUser.save();
+        res.status(201).json(newUser);
+    } catch (error) {
+        console.error("Error adding user:", error);
+        res.status(500).json({ message: error.message });
+    }
+};
