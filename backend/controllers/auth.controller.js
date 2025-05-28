@@ -19,12 +19,13 @@ const register = async (req, res) => {
             return res.status(400).json({ message: "User already exists" });
         }
         // Hash the password
-        const salt = await bcrypt.genSalt(10);
-        const hashedPassword = await bcrypt.hash(password, salt);
+        // const salt = await bcrypt.genSalt(10);
+        // const hashedPassword = await bcrypt.hash(password, salt);
         // Create new user
         const newUser = new User({
             login_name,
-            password: hashedPassword,
+            // password: hashedPassword,
+            password,
             first_name,
             last_name,
             location,
@@ -61,7 +62,8 @@ const login = async (req, res) => {
         if (!user) {
             return res.status(400).json({ message: "Invalid credentials" });
         }
-        const isMatch = await bcrypt.compare(password, user.password);
+        // const isMatch = await bcrypt.compare(password, user.password);
+        const isMatch = password === user.password; // Assuming password is stored in plain text for simplicity
         if (!isMatch) {
             return res.status(400).json({ message: "Invalid credentials" });
         }
@@ -83,7 +85,7 @@ const login = async (req, res) => {
     }
 };
 
-const logout = (req, res) => {
+const logout = async (req, res) => {
     try {
         res.cookie("jwt", "", { maxAge: 0 });
         res.status(200).json({ message: "Logged out successfully" });
@@ -93,7 +95,7 @@ const logout = (req, res) => {
     }
 };
 
-const checkAuth = (req, res) => {
+const checkAuth = async (req, res) => {
     try {
         res.status(200).json(req.user);
     } catch (error) {
@@ -102,9 +104,35 @@ const checkAuth = (req, res) => {
     }
 };
 
+const adminLogin = async (req, res) => {
+    const { login_name } = req.body;
+    try {
+        const user = await User.findOne({ login_name });
+        if (!user) {
+            return res.status(400).json({ message: "Invalid credentials" });
+        }
+        generateToken(user._id, res);
+        res.status(200).json({
+            user: {
+                _id: user._id,
+                login_name: user.login_name,
+                first_name: user.first_name,
+                last_name: user.last_name,
+                location: user.location,
+                description: user.description,
+                occupation: user.occupation,
+            },
+        });
+    } catch (error) {
+        console.error("Error logging in as Admin:", error);
+        res.status(500).json({ message: error.message });
+    }
+}
+
 module.exports = {
     register,
     login,
     logout,
     checkAuth,
+    adminLogin
 };

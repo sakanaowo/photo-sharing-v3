@@ -1,20 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { Typography, Card, CardContent, Button } from "@mui/material";
-import { Link, useParams } from "react-router-dom";
-import fetchModel from "../../lib/fetchModelData";
-
-// import models from "../../modelData/models";
+import { Link } from "react-router-dom";
 import "./styles.css";
+import { userStore } from "../../store/userStore";
 
 function UserDetail() {
-  const { userId } = useParams();
-  const [user, setUser] = useState(null);
-
-  useEffect(() => {
-    fetchModel(`http://localhost:8081/api/user/${userId}`).then((data) => {
-      if (data) setUser(data);
-    });
-  }, [userId]);
+  const { selectedUser } = userStore();
+  let user = selectedUser;
+  // console.log("selected user from user detail ", selectedUser);
 
   if (!user) {
     return <Typography variant="h4">User not found</Typography>;

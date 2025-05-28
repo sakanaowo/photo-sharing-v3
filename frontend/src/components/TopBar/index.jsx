@@ -40,7 +40,7 @@ function TopBar() {
     <AppBar className="topbar-appBar" position="absolute">
       <Toolbar className="topbar-toolbar">
         <Typography variant="h5" className="topbar-title" color="inherit">
-          Nguyễn Thái Anh
+          Hi Nguyễn Thái Anh
         </Typography>
         <Typography variant="h6" className="topbar-context" color="inherit">
           {contextText}

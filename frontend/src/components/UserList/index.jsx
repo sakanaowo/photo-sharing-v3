@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import {
   Divider,
   List,
@@ -8,28 +8,14 @@ import {
 } from "@mui/material";
 import { Link } from "react-router-dom";
 import "./styles.css";
-// import models from "../../modelData/models";
-import fetchModel from "../../lib/fetchModelData";
 import { userStore } from "../../store/userStore";
 
 function UserList() {
-  const { users, selectedUser, getUsers, setSelectedUser } = userStore();
-  console.log("users", users);
+  const { users, getUsers, setSelectedUser } = userStore();
+  // console.log("users from userlist", users);
   useEffect(() => {
     getUsers();
   }, [getUsers]);
-  console.log("selectedUser", selectedUser);
-  // const [users, setUsers] = useState([]);
-
-  // useEffect(() => {
-  //   fetchModel("http://localhost:8081/api/user/list")
-  //     .then((data) => {
-  //       setUsers(data);
-  //     })
-  //     .catch((error) => {
-  //       console.error("Error fetching user data:", error);
-  //     });
-  // }, []);
 
   return (
     <div className="user-list">

@@ -43,5 +43,15 @@ export const authStore = create((set, get) => ({
             console.error("Error during logout:", error);
             toast.error("Logout failed. Please try again.");
         }
+    },
+    adminLogin: async (data) => {
+        try {
+            const res = await axiosInstance.post("/admin/login", data);
+            set({ authUser: res.data });
+            toast.success("Admin login successful!");
+        } catch (error) {
+            console.error("Error during admin login:", error);
+            toast.error("Admin login failed. Please check your credentials.");
+        }
     }
 }));

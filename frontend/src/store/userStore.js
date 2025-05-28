@@ -12,5 +12,12 @@ export const userStore = create((set, get) => ({
             console.error("Error fetching users:", error);
         }
     },
-    setSelectedUser: (user) => set({ selectedUser: user }),
+    setSelectedUser: async (user) => {
+        try {
+            const response = await axiosInstance.get(`/user/${user._id}`);
+            set({ selectedUser: response.data });
+        } catch (error) {
+            console.error("Error fetching user details:", error);
+        }
+    }
 }));
