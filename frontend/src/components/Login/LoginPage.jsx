@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { authStore } from "../../store/authStore";
 import "./LoginForm.css";
 import { Button } from "@mui/material";
@@ -112,16 +113,21 @@ import { Button } from "@mui/material";
 // }
 
 function LoginPage() {
-  const { login, adminLogin } = authStore();
+  const navigate = useNavigate();
+  const { login, adminLogin, authUser } = authStore();
   const [formData, setFormData] = useState({
     login_name: "",
     // password: "",
   });
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     // login(formData);
-    adminLogin(formData);
+    const user = await adminLogin(formData);
+
+    if (user) {
+      navigate(`/users/${user._id}`);
+    }
   };
 
   return (

@@ -78,6 +78,7 @@ const App = () => {
         <Route path="/*" element={authUser ? <Applayout /> : <Navigate to="/login" />} />
         <Route path="/login" element={!authUser ? <LoginPage /> : <Navigate to="/" />} />
         <Route path="/register" element={!authUser ? <RegisterPage /> : <Navigate to="/" />} />
+
       </Routes>
       <Toaster />
     </>

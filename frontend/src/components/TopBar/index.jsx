@@ -1,17 +1,18 @@
 import React, { useState, useEffect } from "react";
-import { AppBar, Toolbar, Typography } from "@mui/material";
+import { AppBar, Button, Toolbar, Typography } from "@mui/material";
 import { useLocation } from "react-router-dom";
 // import models from "../../modelData/models";
 
 import "./styles.css";
 import { userStore } from "../../store/userStore";
+import { authStore } from "../../store/authStore";
 
 function TopBar() {
   const location = useLocation();
   const [contextText, setContextText] = useState("");
 
   const { selectedUser } = userStore();
-  // console.log("selectedUser", selectedUser);
+  const { authUser, logout } = authStore();
 
   useEffect(() => {
     const pathParts = location.pathname.split("/");
@@ -40,11 +41,19 @@ function TopBar() {
     <AppBar className="topbar-appBar" position="absolute">
       <Toolbar className="topbar-toolbar">
         <Typography variant="h5" className="topbar-title" color="inherit">
-          Hi Nguyễn Thái Anh
+          Hi {authUser.first_name + " " + authUser.last_name}
         </Typography>
         <Typography variant="h6" className="topbar-context" color="inherit">
           {contextText}
         </Typography>
+        <Button
+          variant="contained"
+          color="secondary"
+          className="topbar-button"
+          onClick={logout}
+        >
+          Log Out
+        </Button>
       </Toolbar>
     </AppBar>
   );
