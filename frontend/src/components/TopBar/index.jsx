@@ -13,6 +13,7 @@ function TopBar() {
 
   const { selectedUser } = userStore();
   const { authUser, logout } = authStore();
+  console.log("Auth User from top bar: ", authUser);
 
   useEffect(() => {
     const pathParts = location.pathname.split("/");
@@ -41,7 +42,7 @@ function TopBar() {
     <AppBar className="topbar-appBar" position="absolute">
       <Toolbar className="topbar-toolbar">
         <Typography variant="h5" className="topbar-title" color="inherit">
-          Hi {authUser.first_name + " " + authUser.last_name}
+          Hi {authUser.user.first_name + " " + authUser.user.last_name}
         </Typography>
         <Typography variant="h6" className="topbar-context" color="inherit">
           {contextText}

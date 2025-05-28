@@ -114,7 +114,7 @@ import { Button } from "@mui/material";
 
 function LoginPage() {
   const navigate = useNavigate();
-  const { login, adminLogin, authUser } = authStore();
+  const { adminLogin } = authStore();
   const [formData, setFormData] = useState({
     login_name: "",
     // password: "",
