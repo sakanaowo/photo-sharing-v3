@@ -1,30 +1,27 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import { Typography, Card, CardContent, CardMedia, Link } from "@mui/material";
-import { Link as RouterLink, useParams } from "react-router-dom";
-import fetchModel from "../../lib/fetchModelData";
-// import models from "../../modelData/models";
+import { Link as RouterLink } from "react-router-dom";
+
 import "./styles.css";
+import { userStore } from "../../store/userStore";
+import { photoStore } from "../../store/photoStore";
+import CommentSection from "./commentSection";
 
 function UserPhotos() {
-  const { userId } = useParams();
-  const [user, setUser] = useState(null);
-  const [photos, setPhotos] = useState([]);
+  const { selectedUser } = userStore();
+  const { photos, setPhotos } = photoStore();
+  let user = selectedUser;
 
   useEffect(() => {
-    fetchModel(`http://localhost:8081/api/user/${userId}`).then((data) => {
-      if (data) setUser(data);
-    });
-  }, [userId]);
-  useEffect(() => {
-    fetchModel(`http://localhost:8081/api/photo/photoOfUser/${userId}`).then(
-      (data) => {
-        if (data) setPhotos(data);
-      }
+    setPhotos(user);
+  }, [user, setPhotos]);
+
+  if (photos.length === 0) {
+    return (
+      <Typography variant="h4">
+        {user.first_name + " " + user.last_name} does not have any photos.
+      </Typography>
     );
-  }, [userId]);
-
-  if (!user || !photos) {
-    return <Typography variant="h4">Photos not found</Typography>;
   }
 
   const formatDate = (dateStr) => {
@@ -77,6 +74,10 @@ function UserPhotos() {
                 ))}
             </div>
           </CardContent>
+          <CommentSection
+            photoId={photo._id}
+            onSuccess={() => setPhotos(user)}
+          />
         </Card>
       ))}
     </div>
