@@ -14,7 +14,8 @@ dbConnect();
 
 app.use(cookieParser());
 app.use(cors({
-  origin: "http://localhost:3000",
+  // origin: "http://localhost:3000",
+  origin:"https://sck5zr-3000.csb.app",
   credentials: true,
 }));
 app.use(express.json());
