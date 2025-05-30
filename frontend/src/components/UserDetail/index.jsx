@@ -3,11 +3,14 @@ import { Typography, Card, CardContent, Button } from "@mui/material";
 import { Link } from "react-router-dom";
 import "./styles.css";
 import { userStore } from "../../store/userStore";
+import { authStore } from "../../store/authStore";
 
 function UserDetail() {
   const { selectedUser } = userStore();
-  let user = selectedUser;
-  // console.log("selected user from user detail ", selectedUser);
+  const { authUser } = authStore();
+  let user = selectedUser ? selectedUser : authUser;
+  console.log("selected user from user detail ", selectedUser);
+  console.log("auth user from user detail ", authUser);
 
   if (!user) {
     return <Typography variant="h4">User not found</Typography>;

@@ -1,5 +1,5 @@
 const User = require("../db/userModel");
-const bcrypt = require("bcrypt");
+// const bcrypt = require("bcrypt");
 const { generateToken } = require("../lib/generateToken");
 
 const register = async (req, res) => {
@@ -97,7 +97,18 @@ const logout = async (req, res) => {
 
 const checkAuth = async (req, res) => {
     try {
-        res.status(200).json(req.user);
+        // res.status(200).json(req.user);
+        res.status(200).json({
+            user: {
+                _id: req.user._id,
+                login_name: req.user.login_name,
+                first_name: req.user.first_name,
+                last_name: req.user.last_name,
+                location: req.user.location,
+                description: req.user.description,
+                occupation: req.user.occupation,
+            },
+        })
     } catch (error) {
         console.error("Error checking authentication:", error);
         res.status(500).json({ message: error.message });
@@ -129,10 +140,21 @@ const adminLogin = async (req, res) => {
     }
 }
 
+const adminLogout = async (req, res) => {
+    try {
+        res.cookie("jwt", "", { maxAge: 0 });
+        res.status(200).json({ message: "Logged out successfully" });
+    } catch (error) {
+        console.error("Error logging out:", error);
+        res.status(500).json({ message: error.message });
+    }
+}
+
 module.exports = {
     register,
     login,
     logout,
     checkAuth,
-    adminLogin
+    adminLogin,
+    adminLogout
 };

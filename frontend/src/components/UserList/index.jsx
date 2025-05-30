@@ -24,7 +24,10 @@ function UserList() {
           <React.Fragment key={user._id}>
             <ListItem disablePadding className="user-list-item">
               <ListItemButton
-                onClick={() => setSelectedUser(user)}
+                onClick={() => {
+                  setSelectedUser(user);
+                  // console.log("Selected user:", user);
+                }}
                 component={Link}
                 to={`/users/${user._id}`}
               >

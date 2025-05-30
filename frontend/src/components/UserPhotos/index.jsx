@@ -1,14 +1,14 @@
 import React, { useEffect } from "react";
 import { Typography, Card, CardContent, CardMedia, Link } from "@mui/material";
 import { Link as RouterLink } from "react-router-dom";
-import { userStore } from "../../store/userStore";
 
 import "./styles.css";
+import { userStore } from "../../store/userStore";
 import { photoStore } from "../../store/photoStore";
+import CommentSection from "./commentSection";
 
 function UserPhotos() {
   const { selectedUser } = userStore();
-  console.log("Selected User from user photo:", selectedUser);
   const { photos, setPhotos } = photoStore();
   let user = selectedUser;
 
@@ -74,6 +74,10 @@ function UserPhotos() {
                 ))}
             </div>
           </CardContent>
+          <CommentSection
+            photoId={photo._id}
+            onSuccess={() => setPhotos(user)}
+          />
         </Card>
       ))}
     </div>

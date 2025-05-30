@@ -8,25 +8,18 @@ import UserDetail from "./components/UserDetail";
 import UserList from "./components/UserList";
 import UserPhotos from "./components/UserPhotos";
 
+import PostPage from "./components/PostPhoto/PostPage";
+
 import LoginPage from './components/Login/LoginPage';
 import RegisterPage from './components/Register/RegisterPage';
+
+import ShowUserList from './components/lib/ShowUserListButton';
+import PostButton from './components/lib/PostButton';
 
 import { authStore } from "./store/authStore";
 import { useEffect } from 'react';
 
-const NavigateButton = () => {
-  const navigate = useNavigate();
-  return (
-    <Button
-      variant="contained"
-      color="primary"
-      onClick={() => navigate('/users')}
-      style={{ position: 'absolute', bottom: '30px', left: '30px' }}
-    >
-      Show User List
-    </Button>
-  );
-}
+
 
 const Applayout = () => {
   return (
@@ -37,7 +30,10 @@ const Applayout = () => {
         </Grid>
         <div className="main-topbar-buffer" />
         <Grid item xs={12}>
-          <NavigateButton />
+          <div style={{ display: "flex", gap: "10px", paddingLeft: "30px", paddingBottom: "20px" }}>
+            <ShowUserList />
+            <PostButton />
+          </div>
         </Grid>
         <Grid item sm={3}>
           <Paper className="main-grid-item">
@@ -56,6 +52,10 @@ const Applayout = () => {
                 element={<UserPhotos />}
               />
               <Route path="users" element={<UserList />} />
+              <Route
+                path="/photos/new"
+                element={<PostPage />}
+              />
             </Routes>
           </Paper>
         </Grid>
@@ -78,7 +78,6 @@ const App = () => {
         <Route path="/*" element={authUser ? <Applayout /> : <Navigate to="/login" />} />
         <Route path="/login" element={!authUser ? <LoginPage /> : <Navigate to="/" />} />
         <Route path="/register" element={!authUser ? <RegisterPage /> : <Navigate to="/" />} />
-
       </Routes>
       <Toaster />
     </>

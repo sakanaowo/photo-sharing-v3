@@ -17,17 +17,16 @@ function TopBar() {
 
   useEffect(() => {
     const pathParts = location.pathname.split("/");
-    // const userId = pathParts[pathParts.length - 1];
-
+    let user = selectedUser;
     if (pathParts.includes("photos")) {
-      let user = selectedUser;
+      // let user = selectedUser;
       if (user) {
         setContextText(`Photos of ${user.first_name} ${user.last_name}`);
       } else {
         setContextText("");
       }
     } else if (pathParts.includes("users")) {
-      let user = selectedUser;
+      // let user = selectedUser;
       if (user) {
         setContextText(`${user.first_name} ${user.last_name}`);
       } else {
@@ -42,7 +41,7 @@ function TopBar() {
     <AppBar className="topbar-appBar" position="absolute">
       <Toolbar className="topbar-toolbar">
         <Typography variant="h5" className="topbar-title" color="inherit">
-          Hi {authUser.user.first_name + " " + authUser.user.last_name}
+          Hi {authUser.first_name + " " + authUser.last_name}
         </Typography>
         <Typography variant="h6" className="topbar-context" color="inherit">
           {contextText}

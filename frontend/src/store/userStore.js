@@ -19,5 +19,5 @@ export const userStore = create((set, get) => ({
         } catch (error) {
             console.error("Error fetching user details:", error);
         }
-    }
+    },
 }));

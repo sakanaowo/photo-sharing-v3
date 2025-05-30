@@ -32,7 +32,6 @@ const getUserPhotos = async (req, res) => {
       }
       photo.comments = commentWithUser;
     }
-
     res.status(200).json(photos);
   } catch (error) {
     console.error("Error fetching user photos:", error);
@@ -40,4 +39,28 @@ const getUserPhotos = async (req, res) => {
   }
 };
 
-module.exports = { getUserPhotos };
+const uploadPhoto = async (req, res) => {
+  try {
+    if (!req.file) {
+      return res.status(400).json({ message: "No file uploaded" });
+    }
+    const userId = req.userId;
+    const newPhoto = new Photo({
+      file_name: req.file.filename,
+      user_id: userId,
+      date_time: new Date(),
+      comments: [],
+    })
+
+    await newPhoto.save();
+    res.status(201).json({
+      message: "Photo uploaded successfully",
+      photo: newPhoto
+    });
+  } catch (error) {
+    console.error("Error uploading photo:", error);
+    res.status(500).json({ message: "Failed to upload photo", error: error.message });
+  }
+}
+
+module.exports = { getUserPhotos, uploadPhoto };

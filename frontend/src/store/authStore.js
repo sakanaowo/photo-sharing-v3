@@ -7,7 +7,7 @@ export const authStore = create((set, get) => ({
     checkAuth: async () => {
         try {
             const res = await axiosInstance.get("/auth/check");
-            set({ authUser: res.data });
+            set({ authUser: res.data.user });
         } catch (error) {
             console.error("Error checking authentication:", error);
             set({ authUser: null });
@@ -17,7 +17,7 @@ export const authStore = create((set, get) => ({
     login: async (data) => {
         try {
             const res = await axiosInstance.post("/auth/login", data);
-            set({ authUser: res.data });
+            set({ authUser: res.data.user });
             toast.success("Login successful!");
         } catch (error) {
             toast.error("Login failed. Please check your credentials.");
@@ -27,7 +27,7 @@ export const authStore = create((set, get) => ({
     register: async (data) => {
         try {
             const res = await axiosInstance.post("/auth/register", data);
-            set({ authUser: res.data });
+            set({ authUser: res.data.user });
             toast.success("Registration successful!");
         } catch (error) {
             console.error("Error during registration:", error);
@@ -47,7 +47,7 @@ export const authStore = create((set, get) => ({
     adminLogin: async (data) => {
         try {
             const res = await axiosInstance.post("/admin/login", data);
-            set({ authUser: res.data });
+            set({ authUser: res.data.user });
             toast.success("Admin login successful!");
             return res.data;
         } catch (error) {
