@@ -13,7 +13,7 @@ function TopBar() {
 
   const { selectedUser } = userStore();
   const { authUser, logout } = authStore();
-  console.log("Auth User from top bar: ", authUser);
+  // console.log("Auth User from top bar: ", authUser);
 
   useEffect(() => {
     const pathParts = location.pathname.split("/");

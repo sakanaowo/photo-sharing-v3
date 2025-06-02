@@ -1,13 +1,11 @@
 
+const Comment = require('../db/commentModel');
 const Photo = require('../db/photoModel');
 
 const postComment = async (req, res) => {
     const { photo_id } = req.params;
     const { comment } = req.body;
     const userId = req.userId;
-
-
-    console.log("Posting comment:", { photo_id, comment, userId });
 
     if (!comment || !userId) {
         return res.status(400).json({ message: "Missing comment or user ID" });
@@ -20,13 +18,14 @@ const postComment = async (req, res) => {
             return res.status(404).json({ message: "Photo not found" });
         }
 
-        photo.comments.push({
+        const newComment = new Comment({
             comment: comment.trim(),
             user_id: userId,
             date_time: new Date(),
+            photo_id: photo._id,
         });
 
-        await photo.save();
+        await newComment.save();
 
         res.status(201).json({ message: "Comment posted successfully" });
     } catch (error) {

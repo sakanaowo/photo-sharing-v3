@@ -9,8 +9,8 @@ function UserDetail() {
   const { selectedUser } = userStore();
   const { authUser } = authStore();
   let user = selectedUser ? selectedUser : authUser;
-  console.log("selected user from user detail ", selectedUser);
-  console.log("auth user from user detail ", authUser);
+  // console.log("selected user from user detail ", selectedUser);
+  // console.log("auth user from user detail ", authUser);
 
   if (!user) {
     return <Typography variant="h4">User not found</Typography>;

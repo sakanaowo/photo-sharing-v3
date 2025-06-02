@@ -14,11 +14,9 @@ function LoginPage() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    login(formData);
+    // login(formData);
     // const user = await login(formData);
     const user = await adminLogin(formData);
-    console.log("User logged in:", user);
-    console.log("User ID:", user?._id || user?.user?._id);
     const userId = user?._id || user?.user?._id;
 
     if (userId) {

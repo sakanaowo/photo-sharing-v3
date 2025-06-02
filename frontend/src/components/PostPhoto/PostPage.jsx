@@ -40,8 +40,8 @@ function PostPage() {
         <Button
           variant="contained"
           color="primary"
-          onClick={() => {
-            uploadPhoto();
+          onClick={async () => {
+            await uploadPhoto();
             navigate(`/photos/${authUser._id}`);
           }}
           sx={{ mt: 2, width: "100%" }}

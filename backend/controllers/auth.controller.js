@@ -62,7 +62,9 @@ const login = async (req, res) => {
         if (!user) {
             return res.status(400).json({ message: "Invalid credentials" });
         }
-        // const isMatch = await bcrypt.compare(password, user.password);
+        if (!login_name || !password) {
+            return res.status(400).json({ message: "Login name and password are required" });
+        }
         const isMatch = password === user.password; // Assuming password is stored in plain text for simplicity
         if (!isMatch) {
             return res.status(400).json({ message: "Invalid credentials" });
