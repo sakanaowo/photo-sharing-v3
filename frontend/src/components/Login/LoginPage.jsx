@@ -6,7 +6,7 @@ import { Button } from "@mui/material";
 
 function LoginPage() {
   const navigate = useNavigate();
-  const { adminLogin } = authStore();
+  const { adminLogin, login } = authStore();
   const [formData, setFormData] = useState({
     login_name: "",
     // password: "",
@@ -14,7 +14,8 @@ function LoginPage() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    // login(formData);
+    login(formData);
+    // const user = await login(formData);
     const user = await adminLogin(formData);
     console.log("User logged in:", user);
     console.log("User ID:", user?._id || user?.user?._id);
