@@ -15,6 +15,7 @@ function UserPhotos() {
   useEffect(() => {
     setPhotos(user);
   }, [user, setPhotos]);
+  console.log("user's photos:", user)
 
   if (photos.length === 0) {
     return (
