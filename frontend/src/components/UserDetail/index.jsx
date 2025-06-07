@@ -8,10 +8,13 @@ import { authStore } from "../../store/authStore";
 function UserDetail() {
   const { selectedUser } = userStore();
   const { authUser } = authStore();
-  let user = selectedUser ? selectedUser : authUser;
-  // console.log("selected user from user detail ", selectedUser);
-  // console.log("auth user from user detail ", authUser);
+  let user = selectedUser;
+  if (selectedUser === undefined) {
+    user = authUser;
+  }
 
+  console.log("Selected User:", selectedUser);
+  console.log("Auth User:", authUser);
   if (!user) {
     return <Typography variant="h4">User not found</Typography>;
   }
@@ -42,6 +45,18 @@ function UserDetail() {
         >
           View Photos
         </Button>
+        {authUser._id === selectedUser._id ? (
+          <Button
+            variant="contained"
+            component={Link}
+            to={`/edit/${authUser._id}`}
+            color="primary"
+            className="photos-button"
+            style={{ marginLeft: "10px" }}
+          >
+            Update Profile
+          </Button>
+        ) : null}
       </CardContent>
     </Card>
   );

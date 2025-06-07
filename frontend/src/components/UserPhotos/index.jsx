@@ -1,15 +1,23 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useNavigate } from "react";
 import { Typography, Card, CardContent, CardMedia, Link } from "@mui/material";
 import { Link as RouterLink } from "react-router-dom";
 
 import "./styles.css";
 import { userStore } from "../../store/userStore";
 import { photoStore } from "../../store/photoStore";
+import { authStore } from "../../store/authStore";
+import { useCommentStore } from "../../store/commentStore";
 import CommentSection from "./commentSection";
+import DeletePostButton from "../lib/DeletePostButton";
+import CommentItem from "../lib/CommentItem";
 
 function UserPhotos() {
+  // const nagivate = useNavigate();
+
   const { selectedUser } = userStore();
-  const { photos, setPhotos } = photoStore();
+  const { photos, setPhotos, deletePhoto } = photoStore();
+  const { deleteComment } = useCommentStore();
+  const { authUser } = authStore();
   let user = selectedUser;
 
   useEffect(() => {
@@ -49,34 +57,48 @@ function UserPhotos() {
             <Typography variant="body2" color="textSecondary">
               Posted on {formatDate(photo.date_time)}
             </Typography>
+            {authUser._id === selectedUser._id ? (
+              <DeletePostButton onDelete={() => deletePhoto(photo._id)} />
+            ) : null}
             <div className="comment-section">
               <Typography variant="h6" gutterBottom>
                 Comments
               </Typography>
               {photo.comments &&
                 photo.comments.map((comment) => (
-                  <Card key={comment._id} className="comment-card">
-                    <Typography variant="body2" color="textSecondary">
-                      {formatDate(comment.date_time)} -
-                      <Link
-                        component={RouterLink}
-                        to={`/users/${comment.user._id}`}
-                        color="primary"
-                        sx={{ ml: 1 }}
-                      >
-                        {comment.user.first_name} {comment.user.last_name}
-                      </Link>
-                    </Typography>
-                    <Typography variant="body1" sx={{ mt: 1 }}>
-                      {comment.comment}
-                    </Typography>
-                  </Card>
+                  // <Card key={comment._id} className="comment-card">
+                  //   <Typography variant="body2" color="textSecondary">
+                  //     {formatDate(comment.date_time)} -
+                  //     <Link
+                  //       component={RouterLink}
+                  //       to={`/users/${comment.user._id}`}
+                  //       color="primary"
+                  //       sx={{ ml: 1 }}
+                  //     >
+                  //       {comment.user.first_name} {comment.user.last_name}
+                  //     </Link>
+                  //   </Typography>
+                  //   <Typography variant="body1" sx={{ mt: 1 }}>
+                  //     {comment.comment}
+                  //   </Typography>
+                  //   {authUser._id === comment.user._id ? <></> : null}
+                  // </Card>
+                  <CommentItem
+                    key={comment._id}
+                    comment={comment}
+                    onDelete={(commentId) => {
+                      deleteComment(commentId);
+                    }}
+                  />
                 ))}
             </div>
           </CardContent>
           <CommentSection
             photoId={photo._id}
-            onSuccess={() => setPhotos(user)}
+            onSuccess={() => {
+              setPhotos(user);
+              // nagivate(`/photos/${user._id}`);
+            }}
           />
         </Card>
       ))}

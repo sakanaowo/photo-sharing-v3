@@ -152,11 +152,48 @@ const adminLogout = async (req, res) => {
     }
 }
 
+const updateProfile = async (req, res) => {
+    const { first_name, last_name, location, description, occupation } = req.body;
+    try {
+        const user = await User.findByIdAndUpdate(req.user._id,
+            {
+                $set: {
+                    first_name,
+                    last_name,
+                    location,
+                    description,
+                    occupation,
+                },
+            },
+            { new: true, runValidators: true }
+        );
+        if (!user) {
+            return res.status(404).json({ message: "User not found" });
+        }
+        res.status(200).json({
+            user: {
+                _id: user._id,
+                login_name: user.login_name,
+                first_name: user.first_name,
+                last_name: user.last_name,
+                location: user.location,
+                description: user.description,
+                occupation: user.occupation,
+            },
+        });
+
+    } catch (error) {
+        console.error("Error updating profile:", error);
+        res.status(500).json({ message: error.message });
+    }
+}
+
 module.exports = {
     register,
     login,
     logout,
     checkAuth,
     adminLogin,
-    adminLogout
+    adminLogout,
+    updateProfile
 };

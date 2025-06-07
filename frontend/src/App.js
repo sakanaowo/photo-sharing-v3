@@ -9,6 +9,7 @@ import UserList from "./components/UserList";
 import UserPhotos from "./components/UserPhotos";
 
 import PostPage from "./components/PostPhoto/PostPage";
+import EditProfilePage from "./components/EditProfile/EditProfilePage";
 
 import LoginPage from './components/Login/LoginPage';
 import RegisterPage from './components/Register/RegisterPage';
@@ -55,6 +56,10 @@ const Applayout = () => {
               <Route
                 path="/photos/new"
                 element={<PostPage />}
+              />
+              <Route
+                path="/edit/:userId"
+                element={< EditProfilePage />}
               />
             </Routes>
           </Paper>

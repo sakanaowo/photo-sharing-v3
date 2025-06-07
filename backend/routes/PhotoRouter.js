@@ -13,7 +13,7 @@ const storage = multer.diskStorage({
 });
 const upload = multer({ storage: storage });
 
-const { getUserPhotos, uploadPhoto, getAllPhotos } = require("../controllers/photo.controller");
+const { getUserPhotos, uploadPhoto, getAllPhotos, deletePhoto } = require("../controllers/photo.controller");
 const { protectRoute } = require("../middleware/auth.middleware");
 
 
@@ -23,5 +23,7 @@ router.get("/photoOfUser/:id", getUserPhotos);
 router.post("/new", protectRoute, upload.single('photo'), uploadPhoto);
 
 router.get("/getAllPhotos", getAllPhotos);
+
+router.delete('/:id', protectRoute, deletePhoto);
 
 module.exports = router;

@@ -92,4 +92,28 @@ const getAllPhotos = async (req, res) => {
     res.status(500).json({ message: "Failed to fetch photos", error: error.message });
   }
 }
-module.exports = { getUserPhotos, uploadPhoto, getAllPhotos };
+
+const deletePhoto = async (req, res) => {
+  const photoId = req.params.id;
+  if (!mongoose.Types.ObjectId.isValid(photoId)) {
+    return res.status(400).json({ message: "Invalid photo ID" });
+  }
+
+  try {
+    const photo = await Photo.findByIdAndDelete(photoId);
+    const comment = await Comment.deleteMany({ photo_id: photoId });
+    if (!photo) {
+      return res.status(404).json({ message: "Photo not found" });
+    }
+    if (comment.deletedCount === 0) {
+      console.warn("No comments found for this photo, but photo deleted successfully.");
+    } else {
+      console.log(`Deleted ${comment.deletedCount} comments associated with the photo.`);
+    }
+    res.status(200).json({ message: "Photo deleted successfully" });
+  } catch (error) {
+    console.error("Error deleting photo:", error);
+    res.status(500).json({ message: "Failed to delete photo", error: error.message });
+  }
+}
+module.exports = { getUserPhotos, uploadPhoto, getAllPhotos, deletePhoto };

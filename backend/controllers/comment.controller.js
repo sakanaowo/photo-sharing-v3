@@ -34,5 +34,29 @@ const postComment = async (req, res) => {
     }
 };
 
+const updateComment = async (req, res) => {
+    try {
+        const { comment } = req.body;
+        const updated = await Comment.findByIdAndUpdate(
+            req.params.id,
+            { comment, date_time: new Date() },
+            { new: true }
+        );
+        if (!updated) return res.status(404).json({ message: "Comment not found" });
 
-module.exports = { postComment };
+        res.status(200).json({ comment: updated });
+    } catch (err) {
+        res.status(500).json({ message: "Failed to update comment" });
+    }
+};
+const deleteComment = async (req, res) => {
+    console.log("Deleting comment with ID:", req.params.id);
+    try {
+        const deleted = await Comment.findByIdAndDelete(req.params.id);
+        if (!deleted) return res.status(404).json({ message: "Comment not found" });
+        res.status(200).json({ message: "Comment deleted successfully" });
+    } catch (err) {
+        res.status(500).json({ message: "Failed to delete comment" });
+    }
+}
+module.exports = { postComment, updateComment, deleteComment };

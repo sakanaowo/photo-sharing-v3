@@ -49,5 +49,17 @@ export const photoStore = create((set, get) => ({
             console.error("Error uploading photo:", error);
             toast.error("Failed to upload photo. Please try again later.");
         }
-    }
+    },
+    deletePhoto: async (photoId) => {
+        try {
+            await axiosInstance.delete(`/photo/${photoId}`);
+            set((state) => ({
+                photos: state.photos.filter((photo) => photo._id !== photoId),
+            }));
+            toast.success("Photo deleted successfully!");
+        } catch (error) {
+            console.error("Error deleting photo:", error);
+            toast.error("Failed to delete photo. Please try again later.");
+        }
+    },
 }));

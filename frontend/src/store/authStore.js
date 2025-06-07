@@ -54,5 +54,16 @@ export const authStore = create((set, get) => ({
             console.error("Error during admin login:", error);
             toast.error("Admin login failed. Please check your credentials.");
         }
+    },
+    updateProfile: async (data) => {
+        try {
+            const res = await axiosInstance.put("/auth/update", data);
+            set({ authUser: res.data.user });
+            toast.success("Profile updated successfully!");
+            return res.data.user;
+        } catch (error) {
+            console.error("Error updating profile:", error);
+            toast.error("Profile update failed. Please try again.");
+        }
     }
 }));
