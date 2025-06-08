@@ -57,32 +57,15 @@ function UserPhotos() {
             <Typography variant="body2" color="textSecondary">
               Posted on {formatDate(photo.date_time)}
             </Typography>
-            {authUser._id === selectedUser._id ? (
+            {/* {authUser._id === selectedUser._id ? (
               <DeletePostButton onDelete={() => deletePhoto(photo._id)} />
-            ) : null}
+            ) : null} */}
             <div className="comment-section">
               <Typography variant="h6" gutterBottom>
                 Comments
               </Typography>
               {photo.comments &&
                 photo.comments.map((comment) => (
-                  // <Card key={comment._id} className="comment-card">
-                  //   <Typography variant="body2" color="textSecondary">
-                  //     {formatDate(comment.date_time)} -
-                  //     <Link
-                  //       component={RouterLink}
-                  //       to={`/users/${comment.user._id}`}
-                  //       color="primary"
-                  //       sx={{ ml: 1 }}
-                  //     >
-                  //       {comment.user.first_name} {comment.user.last_name}
-                  //     </Link>
-                  //   </Typography>
-                  //   <Typography variant="body1" sx={{ mt: 1 }}>
-                  //     {comment.comment}
-                  //   </Typography>
-                  //   {authUser._id === comment.user._id ? <></> : null}
-                  // </Card>
                   <CommentItem
                     key={comment._id}
                     comment={comment}

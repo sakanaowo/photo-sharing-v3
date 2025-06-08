@@ -15,10 +15,12 @@ const Test = require("./routes/TestRouter.js");
 dbConnect();
 
 app.use(cookieParser());
-app.use(cors({
-  origin: "http://localhost:3000",
-  credentials: true,
-}));
+app.use(
+  cors({
+    origin: "https://lhd9n7-3000.csb.app",
+    credentials: true,
+  })
+);
 app.use(express.json());
 app.use("/api/user", UserRouter);
 app.use("/api/photo", PhotoRouter);

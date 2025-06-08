@@ -1,6 +1,6 @@
-import axios from 'axios';
+import axios from "axios";
 
 export const axiosInstance = axios.create({
-    baseURL: 'http://localhost:8081/api',
-    withCredentials: true,
-})
+  baseURL: "https://lhd9n7-8081.csb.app/api",
+  withCredentials: true,
+});

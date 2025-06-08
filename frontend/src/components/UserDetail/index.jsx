@@ -45,7 +45,7 @@ function UserDetail() {
         >
           View Photos
         </Button>
-        {authUser._id === selectedUser._id ? (
+        {/* {authUser._id === selectedUser._id ? (
           <Button
             variant="contained"
             component={Link}
@@ -56,7 +56,7 @@ function UserDetail() {
           >
             Update Profile
           </Button>
-        ) : null}
+        ) : null} */}
       </CardContent>
     </Card>
   );

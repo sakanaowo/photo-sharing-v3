@@ -24,7 +24,6 @@ const CommentItem = ({ comment, onDelete }) => {
       await axiosInstance.put(`/comment/${comment._id}`, {
         comment: editedComment,
       });
-      //   onUpdate(res.data.comment); // callback to update in parent
       toast.success("Comment updated successfully");
       setIsEditing(false);
     } catch (err) {
@@ -61,7 +60,7 @@ const CommentItem = ({ comment, onDelete }) => {
         </Typography>
       )}
 
-      {authUser._id === comment.user._id && (
+      {/* {authUser._id === comment.user._id && (
         <div style={{ marginTop: "8px" }}>
           {isEditing ? (
             <>
@@ -95,7 +94,7 @@ const CommentItem = ({ comment, onDelete }) => {
             </>
           )}
         </div>
-      )}
+      )} */}
     </Card>
   );
 };
