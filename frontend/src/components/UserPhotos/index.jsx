@@ -1,6 +1,6 @@
-import React, { useEffect, useNavigate } from "react";
+import React, { useEffect } from "react";
 import { Typography, Card, CardContent, CardMedia, Link } from "@mui/material";
-import { Link as RouterLink } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 import "./styles.css";
 import { userStore } from "../../store/userStore";
@@ -12,7 +12,7 @@ import DeletePostButton from "../lib/DeletePostButton";
 import CommentItem from "../lib/CommentItem";
 
 function UserPhotos() {
-  // const nagivate = useNavigate();
+  const nagivate = useNavigate();
 
   const { selectedUser } = userStore();
   const { photos, setPhotos, deletePhoto } = photoStore();
@@ -78,9 +78,9 @@ function UserPhotos() {
           </CardContent>
           <CommentSection
             photoId={photo._id}
-            onSuccess={() => {
-              setPhotos(user);
-              // nagivate(`/photos/${user._id}`);
+            onSuccess={async () => {
+              await setPhotos(user);
+              nagivate(`/photos/${user._id}`);
             }}
           />
         </Card>
